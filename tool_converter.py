@@ -157,8 +157,8 @@ def write_ini(tool: SAWToolDefinition, file_name: str):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("-i", "--input", type=str, help="Input file")
-    parser.add_argument("-o", "--output", type=str, default="", help="Output file")
+    parser.add_argument("-i", "--input", type=str, required=True, help="Input file")
+    parser.add_argument("-o", "--output", type=str, required=True, help="Output file")
     args = parser.parse_args()
 
     input_extension = pathlib.Path(args.input).suffix
@@ -175,9 +175,7 @@ if __name__ == "__main__":
             "Only NDI .rom, Atracsys .ini, and SAW .json formats are supported!"
         )
 
-    if args.output == "":
-        print(json.dumps(tool.to_json(), indent=4, default=str))
-    elif output_extension == ".rom":
+    if output_extension == ".rom":
         write_rom(tool, args.output)
     elif output_extension == ".json":
         write_saw(tool, args.output)
